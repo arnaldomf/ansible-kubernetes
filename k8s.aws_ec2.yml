@@ -1,0 +1,15 @@
+plugin: amazon.aws.aws_ec2
+
+regions:
+- eu-central-1
+
+hostnames:
+- ip-address
+
+keyed_groups:
+- key: tags.role
+  separator: '' # this will remove the leading space
+
+compose:
+  ansible_user: "'ubuntu'"
+  ansible_ssh_private_key_file: "'.credentials/k8s_id_rsa'"
