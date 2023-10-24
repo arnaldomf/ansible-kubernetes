@@ -1,0 +1,10 @@
+- name: Create .ansible directory
+  ansible.builtin.file:
+    path: "{{common_ansible_directory}}"
+    state: directory
+    owner: "{{ansible_user_id}}"
+
+- name: "Download containerd v{{containerd_version}}"
+  ansible.builtin.get_url:
+    dest: "{{common_ansible_directory}}/{{common_containerd_tar}}"
+    url: "https://github.com/containerd/containerd/releases/download/v{{containerd_version}}/{{common_containerd_tar}}"
