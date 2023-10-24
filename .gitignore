@@ -1,3 +1,4 @@
 .credentials
 .ansible
 .envrc
+.vscode
