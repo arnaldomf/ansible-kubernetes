@@ -1,0 +1,14 @@
+# linux modules overlay/br_netfilter
+- name: "Copy modules conf"
+  ansible.builtin.template:
+    src: templates/modules-load.d/k8s.conf.j2
+    dest: /etc/modules-load.d/k8s.conf
+  become: true
+  notify: "Load common modules"
+
+- name: "Copy sysctl config"
+  ansible.builtin.copy:
+    src: files/sysctl.d/k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+  become: true
+  notify: "Apply sysctl conf"
