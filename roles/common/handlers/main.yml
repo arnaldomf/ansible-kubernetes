@@ -3,3 +3,14 @@
     name: containerd.service
     state: restarted
   become: true
+
+- name: "Load common modules"
+  ansible.builtin.command:
+    cmd: "modprobe {{ item }}"
+  become: true
+  loop: "{{ common_linux_modules }}"
+
+- name: "Apply sysctl conf"
+  ansible.builtin.command:
+    cmd: sysctl --system
+  become: true

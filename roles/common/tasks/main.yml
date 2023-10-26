@@ -4,6 +4,21 @@
     state: directory
     owner: "{{ansible_user_id}}"
 
+# linux modules overlay/br_netfilter
+- name: "Copy modules conf"
+  ansible.builtin.template:
+    src: templates/modules-load.d/k8s.conf.j2
+    dest: /etc/modules-load.d/k8s.conf
+  become: true
+  notify: "Load common modules"
+
+- name: "Copy sysctl config"
+  ansible.builtin.copy:
+    src: files/sysctl.d/k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+  become: true
+  notify: "Apply sysctl conf"
+
 # containerd tasks
 - name: "Download containerd v{{containerd_version}}"
   ansible.builtin.get_url:
@@ -33,8 +48,8 @@
     name: containerd.service
     daemon_reload: true
     state: started
+    enabled: true
   become: true
-  when: containerd_unit_file_copy is changed
 
 # runc tasks
 - name: "Install runc v{{runc_version}}"
