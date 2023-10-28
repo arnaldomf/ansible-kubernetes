@@ -1,5 +1,16 @@
 ---
 - name: Install common dependencies
   hosts: controlplane
+  pre_tasks:
+    - name: get ip address
+      local_action:
+        module: amazon.aws.ec2_instance_info
+        region: eu-central-1
+        filters:
+          "tag:role": "controlplane"
+      register: controlplane_info
+      run_once: true
+  vars:
+    common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"
   roles:
     - common
