@@ -7,3 +7,5 @@
 - include_tasks: linux.yml
 
 - include_tasks: containerd.yml
+
+- include_tasks: k8s.yml
