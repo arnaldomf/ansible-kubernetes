@@ -1,0 +1,31 @@
+- name: Install k8s repository key
+  ansible.builtin.apt_key:
+    url: https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
+    keyring: "{{ common_k8s_keyring_path }}"
+    state: present
+  become: true
+
+- name: Install k8s repository
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /
+    state: present
+    update_cache: true
+    filename: kubernetes
+  become: true
+
+- name: Install k8s packages
+  ansible.builtin.apt:
+    pkg:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+  become: true
+  register: install_k8s_packages
+
+- name: Mark hold k8s packages
+  ansible.builtin.command:
+    cmd: apt-mark hold kubelet kubeadm kubectl
+  become: true
+  when: install_k8s_packages is changed
+
