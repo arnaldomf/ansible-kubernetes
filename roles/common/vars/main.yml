@@ -1,5 +1,5 @@
 common_ansible_directory: "{{ansible_user_dir}}/.ansible"
-common_containerd_tar: "containerd-{{containerd_version}}-linux-amd64.tar.gz"
+common_containerd_tar: "containerd-{{common_containerd_version}}-linux-amd64.tar.gz"
 common_linux_modules:
   - overlay
   - br_netfilter
