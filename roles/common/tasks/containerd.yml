@@ -22,14 +22,6 @@
   register: containerd_unit_file_copy
   become: true
 
-- name: "Enable containerd service"
-  ansible.builtin.systemd_service:
-    name: containerd.service
-    daemon_reload: true
-    state: started
-    enabled: true
-  become: true
-
 # runc tasks
 - name: "Install runc v{{common_runc_version}}"
   ansible.builtin.get_url:
@@ -72,4 +64,19 @@
     owner: root
     mode: 0644
   become: true
-  notify: "Restart containerd service"
+  register: copy_containerd_config_file
+
+- name: "Restart containerd service"
+  ansible.builtin.systemd_service:
+    name: containerd.service
+    state: restarted
+  become: true
+  when: copy_containerd_config_file is changed
+
+- name: "Enable containerd service"
+  ansible.builtin.systemd_service:
+    name: containerd.service
+    daemon_reload: true
+    state: started
+    enabled: true
+  become: true

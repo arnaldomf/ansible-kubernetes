@@ -4,3 +4,4 @@ common_linux_modules:
   - overlay
   - br_netfilter
 common_k8s_keyring_path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+network_addon_manifest: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
