@@ -14,3 +14,4 @@
     kubernetes_common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"
   roles:
     - kubernetes_common
+    - kubernetes_controlplane
