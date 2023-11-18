@@ -1,0 +1,1 @@
+kubernetes_controlplane_network_addon_manifest: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
