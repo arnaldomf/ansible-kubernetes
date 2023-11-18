@@ -1,0 +1,17 @@
+- name: Copy ./.credentials/join_command
+  ansible.builtin.copy:
+    src: ./.credentials/join_command
+    dest: "{{ kubernetes_common_ansible_directory }}/join_command"
+  register: copy_join_command_to_node
+
+- name: join cluster
+  ansible.builtin.command:
+    cmd: "bash {{ kubernetes_common_ansible_directory }}/join_command"
+    creates: "{{ kubernetes_common_ansible_directory }}/join_command.lock"
+  when: copy_join_command_to_node is changed
+  become: true
+
+- name: Create join_command.lock
+  ansible.builtin.command:
+    cmd: "touch {{kubernetes_common_ansible_directory}}/join_command.lock"
+    creates: "{{kubernetes_common_ansible_directory}}/join_command.lock"

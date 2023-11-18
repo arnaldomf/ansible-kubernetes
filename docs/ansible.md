@@ -18,6 +18,25 @@ Run the roles needed to install the requirements for the controlplane.
 ansible-playbook install_controlplane.yaml -i k8s.aws_ec2.yml
 ```
 
+By the end of the process, it will create the file `.credentials/join_command`.
+
+### install_node
+Run the roles needed to install the requirements for the nodes.
+
+```bash
+ansible-playbook install_node.yaml -i k8s.aws_ec2.yml
+```
+
+### Testing the cluster
+
+First, try running a shell within a pod:
+
+```bash
+kubectl run my-shell --rm -ti --image ubuntu -- /bin/bash
+```
+
+Then, execute the [sonobuoy](https://github.com/vmware-tanzu/sonobuoy) test suit
+
 ## facts
 
 ### get all the facts
