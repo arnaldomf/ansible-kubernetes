@@ -44,3 +44,11 @@
 - name: Install Kubernetes Network add-on
   ansible.builtin.command:
     cmd: "kubectl apply -f {{kubernetes_controlplane_network_addon_manifest}}"
+    creates: "{{kubernetes_common_ansible_directory}}/install_kubernetes_network_add_on.lock"
+  register: install_kubernetes_network_add_on
+
+- name: Create install_kubernetes_network_add_on.lock
+  ansible.builtin.command:
+    cmd: "touch {{kubernetes_common_ansible_directory}}/install_kubernetes_network_add_on.lock"
+    creates: "{{kubernetes_common_ansible_directory}}/install_kubernetes_network_add_on.lock"
+  when: install_kubernetes_network_add_on is changed
