@@ -1,0 +1,13 @@
+- name: Bootstrap Kubernetes nodes
+  hosts: node
+  pre_tasks:
+    - name: load variables
+      local_action:
+        module: ansible.builtin.include_vars
+        file: .credentials/controlplane_ip.yml
+      run_once: true
+  vars:
+    kubernetes_common_controlplane_ip: "{{ kubernetes_controlplane_ip }}"
+  roles:
+    - kubernetes_common
+    - kubernetes_node

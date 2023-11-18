@@ -6,6 +6,9 @@ regions:
 hostnames:
 - ip-address
 
+filters:
+  instance-state-name: running
+
 keyed_groups:
 - key: tags.role
   separator: '' # this will remove the leading space

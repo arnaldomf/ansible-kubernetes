@@ -10,6 +10,14 @@
           "tag:role": "controlplane"
       register: controlplane_info
       run_once: true
+
+    - name: write ip address to varfile
+      local_action:
+        module: ansible.builtin.copy
+        content: "kubernetes_controlplane_ip: \"{{ controlplane_info.instances[0].private_ip_address }}\""
+        dest: .credentials/controlplane_ip.yml
+      run_once: true
+
   vars:
     kubernetes_common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"
   roles:
