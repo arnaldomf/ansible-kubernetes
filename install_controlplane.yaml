@@ -11,6 +11,6 @@
       register: controlplane_info
       run_once: true
   vars:
-    common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"
+    kubernetes_common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"
   roles:
-    - common
+    - kubernetes_common

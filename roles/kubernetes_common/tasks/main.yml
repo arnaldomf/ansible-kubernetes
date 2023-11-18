@@ -1,6 +1,6 @@
 - name: Create .ansible directory
   ansible.builtin.file:
-    path: "{{common_ansible_directory}}"
+    path: "{{kubernetes_common_ansible_directory}}"
     state: directory
     owner: "{{ansible_user_id}}"
 

@@ -1,0 +1,7 @@
+kubernetes_common_ansible_directory: "{{ansible_user_dir}}/.ansible"
+kubernetes_common_containerd_tar: "containerd-{{kubernetes_common_containerd_version}}-linux-amd64.tar.gz"
+kubernetes_common_linux_modules:
+  - overlay
+  - br_netfilter
+kubernetes_common_k8s_keyring_path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+kubernetes_common_network_addon_manifest: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml

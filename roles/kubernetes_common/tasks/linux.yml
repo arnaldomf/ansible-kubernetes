@@ -10,7 +10,7 @@
   ansible.builtin.command:
     cmd: "modprobe {{ item }}"
   become: true
-  loop: "{{ common_linux_modules }}"
+  loop: "{{ kubernetes_common_linux_modules }}"
   when: copy_modules_conf is changed
 
 - name: "Copy sysctl config"
@@ -30,7 +30,7 @@
   ansible.builtin.lineinfile:
     path: /etc/hosts
     search_string: "cluster-endpoint"
-    line: "{{common_controlplane_ip}} cluster-endpoint"
+    line: "{{kubernetes_common_controlplane_ip}} cluster-endpoint"
     owner: root
     group: root
     mode: '0644'
