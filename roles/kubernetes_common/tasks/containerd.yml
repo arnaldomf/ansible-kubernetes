@@ -1,13 +1,13 @@
 # containerd tasks
-- name: "Download containerd v{{common_containerd_version}}"
+- name: "Download containerd v{{kubernetes_common_containerd_version}}"
   ansible.builtin.get_url:
-    dest: "{{common_ansible_directory}}/{{common_containerd_tar}}"
-    url: "https://github.com/containerd/containerd/releases/download/v{{common_containerd_version}}/{{common_containerd_tar}}"
+    dest: "{{kubernetes_common_ansible_directory}}/{{kubernetes_common_containerd_tar}}"
+    url: "https://github.com/containerd/containerd/releases/download/v{{kubernetes_common_containerd_version}}/{{kubernetes_common_containerd_tar}}"
   register: containerd_download
 
 - name: "Extract containerd"
   ansible.builtin.unarchive:
-    src: "{{common_ansible_directory}}/{{common_containerd_tar}}"
+    src: "{{kubernetes_common_ansible_directory}}/{{kubernetes_common_containerd_tar}}"
     creates: /usr/local/bin/containerd
     dest: /usr/local
     remote_src: yes
@@ -23,9 +23,9 @@
   become: true
 
 # runc tasks
-- name: "Install runc v{{common_runc_version}}"
+- name: "Install runc v{{kubernetes_common_runc_version}}"
   ansible.builtin.get_url:
-    url: "https://github.com/opencontainers/runc/releases/download/v{{common_runc_version}}/runc.amd64"
+    url: "https://github.com/opencontainers/runc/releases/download/v{{kubernetes_common_runc_version}}/runc.amd64"
     dest: /usr/local/sbin/runc
     mode: 0755
   register: install_runc
@@ -40,9 +40,9 @@
     mode: 0755
   become: true
 
-- name: "Install cni-plugins v{{common_cni_plugins_version}}"
+- name: "Install cni-plugins v{{kubernetes_common_cni_plugins_version}}"
   ansible.builtin.unarchive:
-    src: "https://github.com/containernetworking/plugins/releases/download/v{{common_cni_plugins_version}}/cni-plugins-linux-amd64-v{{common_cni_plugins_version}}.tgz"
+    src: "https://github.com/containernetworking/plugins/releases/download/v{{kubernetes_common_cni_plugins_version}}/cni-plugins-linux-amd64-v{{kubernetes_common_cni_plugins_version}}.tgz"
     creates: /opt/cni/bin/bridge
     dest: /opt/cni/bin/
     remote_src: yes

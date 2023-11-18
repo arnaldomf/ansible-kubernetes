@@ -1,7 +1,7 @@
 - name: Install k8s repository key
   ansible.builtin.apt_key:
     url: https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
-    keyring: "{{ common_k8s_keyring_path }}"
+    keyring: "{{ kubernetes_common_k8s_keyring_path }}"
     state: present
   become: true
 
@@ -31,7 +31,7 @@
 
 - name: Bootstrap controlplane
   ansible.builtin.command:
-    cmd: "kubeadm init --control-plane-endpoint=cluster-endpoint --pod-network-cidr='{{common_pod_network_cidr}}' --service-cidr='{{common_service_cidr}}'"
+    cmd: "kubeadm init --control-plane-endpoint=cluster-endpoint --pod-network-cidr='{{kubernetes_common_pod_network_cidr}}' --service-cidr='{{kubernetes_common_service_cidr}}'"
     creates: /etc/kubernetes/kubelet.conf
   become: true
 
@@ -74,4 +74,4 @@
 
 - name: Install Kubernetes Network add-on
   ansible.builtin.command:
-    cmd: "kubectl apply -f {{network_addon_manifest}}"
+    cmd: "kubectl apply -f {{kubernetes_common_network_addon_manifest}}"
