@@ -1,5 +1,5 @@
-# ansible-kubernetes
-This is a repository I will use to put my Kubernetes playbooks.
+# kubernetes-bootstrap-kit
+This is a repository I will use to put playbooks, scripts and other things needed to bootstrap a Kubernetes cluster.
 Our Kubernetes will run on Amazon EC2, so we are going to use the Ansible's AWS Collection
 
 ## content
