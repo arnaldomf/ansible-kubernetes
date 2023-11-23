@@ -1,11 +1,17 @@
 - name: Bootstrap Kubernetes nodes
   hosts: node
+  gather_facts: no # disable gather facts to avoid connection errors before the instance is ready
   pre_tasks:
+    - name: wait for controlplane be accessible
+      ansible.builtin.wait_for_connection:
+        timeout: 300
     - name: load variables
       local_action:
         module: ansible.builtin.include_vars
         file: .credentials/controlplane_ip.yml
       run_once: true
+    - name: gather facts
+      ansible.builtin.gather_facts: {}
   vars:
     kubernetes_common_controlplane_ip: "{{ kubernetes_controlplane_ip }}"
   roles:

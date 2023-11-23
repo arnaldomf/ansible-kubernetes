@@ -1,22 +1,28 @@
 ---
 - name: Install common dependencies
   hosts: controlplane
+  gather_facts: no # disable gather facts to avoid connection errors before the instance is ready
   pre_tasks:
+    - name: wait for controlplane be accessible
+      ansible.builtin.wait_for_connection:
+        timeout: 300
     - name: get ip address
       local_action:
         module: amazon.aws.ec2_instance_info
         region: eu-central-1
         filters:
           "tag:role": "controlplane"
+          "instance-state-name": "running"
       register: controlplane_info
       run_once: true
-
     - name: write ip address to varfile
       local_action:
         module: ansible.builtin.copy
         content: "kubernetes_controlplane_ip: \"{{ controlplane_info.instances[0].private_ip_address }}\""
         dest: .credentials/controlplane_ip.yml
       run_once: true
+    - name: gather facts
+      ansible.builtin.gather_facts: {}
 
   vars:
     kubernetes_common_controlplane_ip: "{{ controlplane_info.instances[0].private_ip_address }}"

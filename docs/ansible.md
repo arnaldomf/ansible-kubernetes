@@ -11,6 +11,23 @@ Install all requirements to run either the nodes or controlplane. This includes,
 
 ## playbooks
 
+### create instances and install controlplane, nodes
+By running this playbook, you are going to:
+- create the controlplane instances
+- create the node instances
+- run the playbook `install_controlplane.yaml`
+- run the playbook `install_node.yaml`
+
+```bash
+ansible-playbook create_cluster.yaml -i k8s.aws_ec2.yml \
+    -e security_group_ids=$SECURITY_GROUP_ID \
+    -e nodes_count=2 -e key_name=$KEY_NAME \
+    -e controlplane_instance_type=t2.medium \
+    -e node_instance_type=t2.medium
+```
+
+As this playbook is idempotent, you can add more nodes by incrementing the **nodes_count** variable.
+
 ### install_controlplane
 Run the roles needed to install the requirements for the controlplane.
 
@@ -27,7 +44,7 @@ Run the roles needed to install the requirements for the nodes.
 ansible-playbook install_node.yaml -i k8s.aws_ec2.yml
 ```
 
-### Testing the cluster
+## Testing the cluster
 
 First, try running a shell within a pod:
 
