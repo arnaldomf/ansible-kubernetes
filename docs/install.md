@@ -47,7 +47,7 @@ ls -l .credentials/k8s_id_rsa
 
 #### testing your dynamic inventory
 
-If you add the tag role=controleplane to your EC2 instances, you can run the command below to test
+If you add the tag role=controlplane to your EC2 instances, you can run the command below to test
 your configuration.
 
 ```bash

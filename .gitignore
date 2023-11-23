@@ -2,3 +2,6 @@
 .ansible
 .envrc
 .vscode
+.terraform
+.terraform.lock.hcl
+terraform.tfstate*
