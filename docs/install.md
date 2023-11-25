@@ -18,7 +18,9 @@ Before isntalling Ansible, we are going to create a virtualenv.
 
 ```bash
 python3 -m venv .ansible
-echo "VIRTUAL_ENV=$(pwd)/.ansible" >> .envrc
+echo "export VIRTUAL_ENV=$(pwd)/.ansible" >> .envrc
+echo "export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .envrc
+echo "export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .envrc
 echo "PATH_add .ansible/bin" >> .envrc
 direnv allow .
 ```
@@ -44,6 +46,12 @@ mkdir .credentials
 ls -l .credentials/k8s_id_rsa
 # -rw------- 1 user user 2.6K Oct 23 22:15 .credentials/k8s_id_rsa
 ```
+
+#### Note on the AWS Credentials
+
+If your intention is configuring pre-existing instances, then your credentials should be linked to a user with `AmazonEC2ReadOnlyAccess` policy.
+On the other hand, if you want the kubernetes-bootstrap-kit to create the instances on your behalf than the user must have the `AmazonEC2FullAccess`
+policy.
 
 #### testing your dynamic inventory
 
