@@ -1,6 +1,6 @@
 - name: Bootstrap controlplane
   ansible.builtin.command:
-    cmd: "kubeadm init --control-plane-endpoint=cluster-endpoint --pod-network-cidr='{{kubernetes_controlplane_pod_network_cidr}}' --service-cidr='{{kubernetes_controlplane_service_cidr}}'"
+    cmd: "kubeadm init --control-plane-endpoint=cluster-endpoint --pod-network-cidr='{{kubernetes_controlplane_pod_network_cidr}}' --service-cidr='{{kubernetes_controlplane_service_cidr}}' --apiserver-cert-extra-sans=cluster-endpoint,{{ kubernetes_controlplane_public_address }}"
     creates: /etc/kubernetes/kubelet.conf
   become: true
 
@@ -52,3 +52,10 @@
     cmd: "touch {{kubernetes_common_ansible_directory}}/install_kubernetes_network_add_on.lock"
     creates: "{{kubernetes_common_ansible_directory}}/install_kubernetes_network_add_on.lock"
   when: install_kubernetes_network_add_on is changed
+
+- name: Fetch kubeconfig
+  ansible.builtin.fetch:
+    dest: .credentials/
+    flat: true
+    src: /home/ubuntu/.kube/config
+  run_once: true

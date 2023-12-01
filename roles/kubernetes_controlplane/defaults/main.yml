@@ -1,2 +1,3 @@
 kubernetes_controlplane_pod_network_cidr: "10.244.0.0/16"
 kubernetes_controlplane_service_cidr: "10.96.0.0/12"
+kubernetes_controlplane_public_address: "127.0.0.1"
