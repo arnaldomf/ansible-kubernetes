@@ -1,0 +1,17 @@
+- name: Destroy kubernetes cluster
+  hosts: localhost
+  pre_tasks:
+    - name: Run terraform to delete instances
+      community.general.terraform:
+        project_path: 'terraform/'
+        state: absent
+        complex_vars: true
+        variables:
+          security_group_ids:
+            - "{{ security_group_ids }}"
+          controlplane_count: 1
+          nodes_count: "{{ nodes_count }}"
+          key_name: "{{ key_name }}"
+          controlplane_instance_type: "{{ controlplane_instance_type }}"
+          node_instance_type: "{{ node_instance_type }}"
+        force_init: true
