@@ -27,3 +27,7 @@ variable "node_instance_type" {
   type = string
   description = "tye instance type for the node"
 }
+
+variable "vpc_id" {
+  type = string
+}

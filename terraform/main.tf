@@ -39,3 +39,17 @@ module "nodes" {
     key_name = var.key_name
     instance_type = var.node_instance_type
 }
+
+data "aws_instance" "controlplane" {
+    instance_id = module.controlplane.instance_ids[0]
+}
+
+module "controlplane_lb" {
+    source = "./modules/loadbalancer"
+    loadbalancer_name = "controlplane"
+    subnet_ids = [ data.aws_instance.controlplane.subnet_id ]
+    security_group_ids = var.security_group_ids
+    loadbalancer_port = 6443
+    vpc_id = var.vpc_id
+    instance_ids = module.controlplane.instance_ids
+}

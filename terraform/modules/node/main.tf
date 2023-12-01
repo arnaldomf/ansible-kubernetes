@@ -1,5 +1,3 @@
-
-
 resource "aws_instance" "node" {
     count = var.size
 
